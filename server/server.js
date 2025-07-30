@@ -22,8 +22,13 @@ const server = http.createServer(app);
 // Initialize Socket.io
 const io = socketIo(server, {
   cors: {
-    origin: process.env.CLIENT_URL || "http://localhost:3000",
-    methods: ["GET", "POST"],
+    origin: [
+      process.env.CLIENT_URL || "http://localhost:3000",
+      "https://rise-921d-hkjcrcwiy-anishs-projects-61639add.vercel.app",
+      "https://rise-jq91-6tpihsrtg-anishs-projects-61639add.vercel.app",
+      /^https:\/\/rise-.*\.vercel\.app$/
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true
   }
 });
@@ -41,8 +46,12 @@ connectDB();
 app.use(cors({
   origin: [
     process.env.CLIENT_URL || "http://localhost:3000",
-    "https://rise-921d-hkjcrcwiy-anishs-projects-61639add.vercel.app"
+    "https://rise-921d-hkjcrcwiy-anishs-projects-61639add.vercel.app",
+    "https://rise-jq91-6tpihsrtg-anishs-projects-61639add.vercel.app",
+    /^https:\/\/rise-.*\.vercel\.app$/
   ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
 }));
 app.use(express.json({ limit: '10mb' }));
